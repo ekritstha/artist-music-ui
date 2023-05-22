@@ -9,7 +9,8 @@ import Users from "./views/Users/Users";
 import UserStoreForm from "./views/Users/UserStoreForm";
 import UserUpdateForm from "./views/Users/UserUpdateForm";
 import Artists from "./views/Artists/Artists";
-import ArtistForm from "./views/Artists/ArtistForm";
+import ArtistForm from "./views/Artists/ArtistsForm";
+import ArtistsImport from "./views/Artists/ArtistImport";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/artists/:id",
         element: <ArtistForm key="artistUpdate" />,
+      },
+      {
+        path: "/artists/import",
+        element: <ArtistsImport key="artistImport" />,
       },
     ],
   },

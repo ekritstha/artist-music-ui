@@ -18,9 +18,13 @@ export default function Users() {
     if (!window.confirm("Are you sure you want to delete this user?")) {
       return;
     }
-    axiosClient.delete(`/users/${user.id}`).then(() => {
-      setNotification("User was successfully deleted");
-      getUsers(page);
+    axiosClient.delete(`/users/${user.id}`).then(({ data }) => {
+      if (data.code == 0) {
+        setNotification(data.message);
+      } else {
+        setNotification("User was successfully deleted");
+        getUsers(currentPage);
+      }
     });
   };
 

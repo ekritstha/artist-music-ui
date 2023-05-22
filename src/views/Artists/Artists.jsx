@@ -14,7 +14,7 @@ export default function Artists() {
     getArtists(currentPage);
   }, [currentPage]);
 
-  const getArtists = (page) => {
+  const getArtists = (page = 1) => {
     setLoading(true);
     axiosClient
       .get(`/artists?page=${page}`)
@@ -35,7 +35,7 @@ export default function Artists() {
     }
     axiosClient.delete(`/artists/${artist.id}`).then(() => {
       setNotification("Artist was successfully deleted");
-      getArtists(page);
+      getArtists(currentPage);
     });
   };
 
@@ -45,6 +45,17 @@ export default function Artists() {
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const exportArtistsClick = () => {
+    axiosClient.get("/export").then(({ data }) => {
+      var fileURL = window.URL.createObjectURL(new Blob([data]));
+      var fileLink = document.createElement("a");
+      fileLink.href = fileURL;
+      fileLink.setAttribute("download", "artists.csv");
+      document.body.appendChild(fileLink);
+      fileLink.click();
+    });
   };
 
   return (
@@ -57,9 +68,22 @@ export default function Artists() {
         }}
       >
         <h1>Artists</h1>
-        <Link className="btn-add" to="/artists/new">
-          Add new
-        </Link>
+        <div
+          style={{
+            display: "flex",
+            gap: "0.7rem",
+          }}
+        >
+          <Link className="btn-add" to="/artists/import">
+            Import Artists
+          </Link>
+          <div className="btn-edit" onClick={exportArtistsClick}>
+            Export
+          </div>
+          <Link className="btn-add" to="/artists/new">
+            Add new
+          </Link>
+        </div>
       </div>
       <div className="card animated fadeInDown">
         <table>
