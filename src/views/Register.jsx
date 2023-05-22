@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [startDate, _setStartDate] = useState(new Date());
   const [dob, setDOB] = useState(null);
   const [errors, setErrors] = useState(null);
@@ -42,10 +43,8 @@ export default function Register() {
       .post("/register", payload)
       .then(({ data }) => {
         if (data.code == 0) {
-          console.log("asd");
           setErrors(data.message);
         } else {
-          const navigate = useNavigate();
           navigate("/login");
         }
       })
