@@ -8,6 +8,8 @@ import Dashboard from "./views/Dashboard";
 import Users from "./views/Users/Users";
 import UserStoreForm from "./views/Users/UserStoreForm";
 import UserUpdateForm from "./views/Users/UserUpdateForm";
+import Artists from "./views/Artists/Artists";
+import ArtistForm from "./views/Artists/ArtistForm";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,18 @@ const router = createBrowserRouter([
       {
         path: "/users/:id",
         element: <UserUpdateForm key="userUpdate" />,
+      },
+      {
+        path: "/artists",
+        element: <Artists />,
+      },
+      {
+        path: "/artists/new",
+        element: <ArtistForm key="artistCreate" />,
+      },
+      {
+        path: "/artists/:id",
+        element: <ArtistForm key="artistUpdate" />,
       },
     ],
   },

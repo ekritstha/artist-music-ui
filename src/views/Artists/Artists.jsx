@@ -1,42 +1,42 @@
 import { useEffect, useState } from "react";
+import { useStateContext } from "../../contexts/ContextProvider";
 import axiosClient from "../../axios-client";
 import { Link } from "react-router-dom";
-import { useStateContext } from "../../contexts/ContextProvider";
 
-export default function Users() {
-  const [users, setUsers] = useState([]);
+export default function Artists() {
+  const [artists, setArtists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const { setNotification } = useStateContext();
 
   useEffect(() => {
-    getUsers(currentPage);
+    getArtists(currentPage);
   }, [currentPage]);
 
-  const onDeleteClick = (user) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) {
-      return;
-    }
-    axiosClient.delete(`/users/${user.id}`).then(() => {
-      setNotification("User was successfully deleted");
-      getUsers(page);
-    });
-  };
-
-  const getUsers = (page) => {
+  const getArtists = (page) => {
     setLoading(true);
     axiosClient
-      .get(`/users?page=${page}`)
+      .get(`/artists?page=${page}`)
       .then(({ data }) => {
         setLoading(false);
-        setUsers(data.data.data);
+        setArtists(data.data.data);
         setCurrentPage(Number(data.data.current_page));
         setTotalPages(Number(data.data.last_page));
       })
       .catch(() => {
         setLoading(false);
       });
+  };
+
+  const onDeleteClick = (artist) => {
+    if (!window.confirm("Are you sure you want to delete this artist?")) {
+      return;
+    }
+    axiosClient.delete(`/artists/${artist.id}`).then(() => {
+      setNotification("Artist was successfully deleted");
+      getArtists(page);
+    });
   };
 
   const handlePrevPage = () => {
@@ -56,8 +56,8 @@ export default function Users() {
           alignItems: "center",
         }}
       >
-        <h1>Users</h1>
-        <Link className="btn-add" to="/users/new">
+        <h1>Artists</h1>
+        <Link className="btn-add" to="/artists/new">
           Add new
         </Link>
       </div>
@@ -66,13 +66,12 @@ export default function Users() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Phone</th>
+              <th>Name</th>
               <th>Date of Birth</th>
               <th>Gender</th>
               <th>Address</th>
+              <th>First Release Year</th>
+              <th>No of Albums Released</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -87,30 +86,29 @@ export default function Users() {
           )}
           {!loading && (
             <tbody>
-              {users.map((u) => (
-                <tr key={u.id}>
-                  <td>{u.id}</td>
-                  <td>{u.first_name}</td>
-                  <td>{u.last_name}</td>
-                  <td>{u.email}</td>
-                  <td>{u.phone}</td>
-                  <td>{u.dob}</td>
+              {artists.map((a) => (
+                <tr key={a.id}>
+                  <td>{a.id}</td>
+                  <td>{a.name}</td>
+                  <td>{a.dob}</td>
                   <td>
-                    {u.gender == "m"
+                    {a.gender == "m"
                       ? "Male"
-                      : u.gender == "f"
+                      : a.gender == "f"
                       ? "Female"
                       : "Others"}
                   </td>
-                  <td>{u.address}</td>
+                  <td>{a.address}</td>
+                  <td>{a.first_release_year}</td>
+                  <td>{a.no_of_albums_released}</td>
                   <td>
-                    <Link className="btn-edit" to={"/users/" + u.id}>
+                    <Link className="btn-edit" to={"/artists/" + a.id}>
                       Edit
                     </Link>
                     &nbsp;
                     <button
                       className="btn-delete"
-                      onClick={(ev) => onDeleteClick(u)}
+                      onClick={(e) => onDeleteClick(a)}
                     >
                       Delete
                     </button>
