@@ -1,9 +1,10 @@
 import React, { createRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [errors, setErrors] = useState(null);
   const { setToken } = useStateContext();
 
@@ -24,6 +25,7 @@ export default function Login() {
           setErrors(data.message);
         } else {
           setToken(data.access_token);
+          navigate("/dashboard");
         }
       })
       .catch((err) => {
