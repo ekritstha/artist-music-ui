@@ -11,6 +11,8 @@ import UserUpdateForm from "./views/Users/UserUpdateForm";
 import Artists from "./views/Artists/Artists";
 import ArtistForm from "./views/Artists/ArtistsForm";
 import ArtistsImport from "./views/Artists/ArtistImport";
+import ArtistMusicList from "./views/Music/ArtistMusicList";
+import MusicForm from "./views/Music/MusicForm";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,18 @@ const router = createBrowserRouter([
       {
         path: "/artists/import",
         element: <ArtistsImport key="artistImport" />,
+      },
+      {
+        path: "/artists/:artist_id/music",
+        element: <ArtistMusicList key="artistMusic" />,
+      },
+      {
+        path: "/artists/:artist_id/music/new",
+        element: <MusicForm key="musicAdd" />,
+      },
+      {
+        path: "/artists/:artist_id/music/:id",
+        element: <MusicForm key="musicEdit" />,
       },
     ],
   },

@@ -126,6 +126,10 @@ export default function Artists() {
                   <td>{a.first_release_year}</td>
                   <td>{a.no_of_albums_released}</td>
                   <td>
+                    <Link className="btn-add" to={`/artists/${a.id}/music`}>
+                      Music
+                    </Link>
+                    &nbsp;
                     <Link className="btn-edit" to={"/artists/" + a.id}>
                       Edit
                     </Link>

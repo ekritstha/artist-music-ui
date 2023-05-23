@@ -201,6 +201,30 @@ table > tbody > tr > td {
   cursor: not-allowed;
 }
 
+.card-parent {
+  display: flex;
+  gap: 1rem;
+}
+
+.card-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
+  width: 160px;
+  background-color: #fff;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-number {
+  font-size: 4rem;
+}
+
+.card-text {
+  font-size: 1.5rem;
+}
+
 /* Login/Signup forms*/
 
 .login-signup-form {

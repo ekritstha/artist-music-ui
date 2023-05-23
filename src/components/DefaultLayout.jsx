@@ -31,7 +31,11 @@ export default function DefaultLayout() {
       </aside>
       <div className="content">
         <header>
-          <div>Header</div>
+          <div>
+            <Link to="/dashboard">
+              <img src="/head.png" alt="head" width="150px" />
+            </Link>
+          </div>
           <div>
             {user.first_name}
             <a href="#" onClick={onLogout} className="btn-logout">
